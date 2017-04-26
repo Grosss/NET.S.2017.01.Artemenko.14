@@ -40,6 +40,8 @@ namespace Task2
 
         #endregion
 
+        #region Public members
+
         public void UnionWith(IEnumerable<T> other)
         {
             if (other == null)
@@ -193,6 +195,37 @@ namespace Task2
         {
             return collection.GetEnumerator();
         }
+
+        #endregion
+
+        #region Overrided object methods
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 17;
+                foreach (var element in collection)
+                    hash = hash * 23 + element.GetHashCode();
+                return hash;
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+                return true;
+
+            if (ReferenceEquals(null, obj))
+                return false;
+
+            if (GetType() != obj.GetType())
+                return false;
+
+            return SetEquals((IEnumerable<T>)obj);
+        }
+
+        #endregion
 
         #region Private members
 
