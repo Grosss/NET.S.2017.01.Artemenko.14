@@ -35,6 +35,33 @@ namespace Task3.Tests
         public double GetArea_Square_ExpectedPositiveTests(double a)
         {
             return new Square(a).GetArea();
-        }        
+        }
+
+        [TestCase(6, ExpectedResult = Math.PI * 12)]
+        [TestCase(5, ExpectedResult = Math.PI * 10)]
+        public double GetPerimeter_Circle_ExpectedPositiveTests(double radius)
+        {
+            return new Circle(radius).GetPerimeter();
+        }
+
+        [TestCase(3, 4, 5, ExpectedResult = 12)]
+        public double GetPerimeter_Triangle_ExpectedPositiveTests(double a, double b, double c)
+        {
+            return new Triangle(a, b, c).GetPerimeter();
+        }
+
+        [TestCase(3, 12, ExpectedResult = 30)]
+        [TestCase(18, 10, ExpectedResult = 56)]
+        public double GetPerimeter_Rectangle_ExpectedPositiveTests(double a, double b)
+        {
+            return new Rectangle(a, b).GetPerimeter();
+        }
+
+        [TestCase(9, ExpectedResult = 36)]
+        [TestCase(5, ExpectedResult = 20)]
+        public double GetPerimeter_Square_ExpectedPositiveTests(double a)
+        {
+            return new Square(a).GetPerimeter();
+        }
     }
 }
