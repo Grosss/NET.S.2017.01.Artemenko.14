@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task3
 {
-    class Triangle : Figure
+    public class Triangle : Figure
     {
         private double sideA;
         private double sideB;

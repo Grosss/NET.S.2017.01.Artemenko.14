@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task3
 {
-    class Circle : Figure
+    public class Circle : Figure
     {
         private double radius;
 
@@ -27,12 +27,12 @@ namespace Task3
 
         public override double GetArea()
         {
-            return 3.14 * radius * radius;
+            return Math.PI * radius * radius;
         }
 
         public override double GetPerimeter()
         {
-            return 2 * 3.14 * radius;
+            return 2 * Math.PI * radius;
         }
     }
 }

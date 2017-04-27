@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task3
 {
-    class Rectangle : Figure
+    public class Rectangle : Figure
     {
         private double width;
         private double height;        

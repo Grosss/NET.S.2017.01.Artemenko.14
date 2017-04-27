@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Task3
 {
-    class Square : Figure
+    public class Square : Figure
     {
         private double side;
 
