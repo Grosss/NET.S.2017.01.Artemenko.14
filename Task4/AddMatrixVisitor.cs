@@ -9,6 +9,7 @@ namespace Task4
     class AddMatrixVisitor<T> : IMatrixVisitor<T> where T : struct
     {
         private Matrix<T> otherMatrix;
+
         public Matrix<T> ResultMatrix { get; private set; }
 
         public AddMatrixVisitor(Matrix<T> other)
