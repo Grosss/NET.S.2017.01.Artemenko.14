@@ -13,11 +13,16 @@ namespace Task1
             if (termsNumber < 1)
                 throw new ArgumentOutOfRangeException();
 
+            return CalculateSequence(termsNumber);
+        }
+
+        private static IEnumerable<int> CalculateSequence(int termsNumber)
+        {
             int previousTerm = 0;
             int currentTerm = 1;
             yield return previousTerm;
 
-            for(int i = 0; i < termsNumber - 1; i++)
+            for (int i = 0; i < termsNumber - 1; i++)
             {
                 yield return currentTerm;
                 currentTerm = previousTerm + currentTerm;
