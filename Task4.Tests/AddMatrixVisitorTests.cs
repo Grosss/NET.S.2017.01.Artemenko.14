@@ -69,85 +69,45 @@ namespace Task4.Tests
             };
 
         #endregion
-
-        [TestCase(ExpectedResult = true)]
-        public bool Sum_PassedSquareAndSquareMatrixes_ExpectedPositiveTest()
+        
+        [Test]
+        public void Sum_PassedSquareAndSquareMatrixes_ExpectedPositiveTest()
         {
-            Matrix<int> squareMatrix = new SquareMatrix<int>(3);
-            Matrix<int> anotherSquareMatrix = new SquareMatrix<int>(3);
-            Matrix<int> resultMatrix = new SquareMatrix<int>(3);
-
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    squareMatrix[i, j] = sqrMatrix[i, j];
-                    anotherSquareMatrix[i, j] = sqrMatrix[i, j];
-                    resultMatrix[i, j] = sqrPlusSqrMatrix[i, j];
-                }
-            }
-
-            return (squareMatrix.Sum(anotherSquareMatrix)).Equals(resultMatrix);
+            Matrix<int> squareMatrix = new SquareMatrix<int>(sqrMatrix);
+            Matrix<int> anotherSquareMatrix = new SquareMatrix<int>(sqrMatrix);
+            Matrix<int> resultMatrix = new SquareMatrix<int>(sqrPlusSqrMatrix);
+                        
+            Assert.AreEqual(squareMatrix.Sum(squareMatrix), resultMatrix);
         }
 
-        [TestCase(ExpectedResult = true)]
-        public bool Sum_PassedSquareAndSymmetricMatrixes_ExpectedPositiveTest()
+        [Test]
+        public void Sum_PassedSquareAndSymmetricMatrixes_ExpectedPositiveTest()
         {
-            Matrix<int> squareMatrix = new SquareMatrix<int>(3);
-            Matrix<int> symmetricMatrix = new SquareMatrix<int>(3);
-            Matrix<int> resultMatrix = new SquareMatrix<int>(3);
-
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    squareMatrix[i, j] = sqrMatrix[i, j];
-                    symmetricMatrix[i, j] = symmMatrix[i, j];
-                    resultMatrix[i, j] = sqrPlusSymmMatrix[i, j];
-                }
-            }
-
-            return (squareMatrix.Sum(symmetricMatrix)).Equals(resultMatrix);
+            Matrix<int> squareMatrix = new SquareMatrix<int>(sqrMatrix);
+            Matrix<int> symmetricMatrix = new SymmetricMatrix<int>(symmMatrix);
+            Matrix<int> resultMatrix = new SquareMatrix<int>(sqrPlusSymmMatrix);
+            
+            Assert.AreEqual(squareMatrix.Sum(symmetricMatrix), resultMatrix);
         }
 
-        [TestCase(ExpectedResult = true)]
-        public bool Sum_PassedSquareAndDiagonalMatrixes_ExpectedPositiveTest()
+        [Test]
+        public void Sum_PassedSquareAndDiagonalMatrixes_ExpectedPositiveTest()
         {
-            Matrix<int> squareMatrix = new SquareMatrix<int>(3);
-            Matrix<int> diagonalMatrix = new SquareMatrix<int>(3);
-            Matrix<int> resultMatrix = new SquareMatrix<int>(3);
-
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    squareMatrix[i, j] = sqrMatrix[i, j];
-                    diagonalMatrix[i, j] = diagMatrix[i, j];
-                    resultMatrix[i, j] = sqrPlusDiagMatrix[i, j];
-                }
-            }
-
-            return (squareMatrix.Sum(diagonalMatrix)).Equals(resultMatrix);
+            Matrix<int> squareMatrix = new SquareMatrix<int>(sqrMatrix);
+            Matrix<int> diagonalMatrix = new SquareMatrix<int>(diagMatrix);
+            Matrix<int> resultMatrix = new SquareMatrix<int>(sqrPlusDiagMatrix);
+            
+            Assert.AreEqual(squareMatrix.Sum(diagonalMatrix), resultMatrix);
         }
 
-        [TestCase(ExpectedResult = true)]
-        public bool Sum_PassedDiagonalAndSymmetricMatrixes_ExpectedPositiveTest()
+        [Test]
+        public void Sum_PassedDiagonalAndSymmetricMatrixes_ExpectedPositiveTest()
         {
-            Matrix<int> symmetricMatrix = new SquareMatrix<int>(3);
-            Matrix<int> diagonalMatrix = new SquareMatrix<int>(3);
-            Matrix<int> resultMatrix = new SquareMatrix<int>(3);
-
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    symmetricMatrix[i, j] = symmMatrix[i, j];
-                    diagonalMatrix[i, j] = diagMatrix[i, j];
-                    resultMatrix[i, j] = diagPlusSymmMatrix[i, j];
-                }
-            }
-
-            return (symmetricMatrix.Sum(diagonalMatrix)).Equals(resultMatrix);
+            Matrix<int> symmetricMatrix = new SquareMatrix<int>(symmMatrix);
+            Matrix<int> diagonalMatrix = new SquareMatrix<int>(diagMatrix);
+            Matrix<int> resultMatrix = new SquareMatrix<int>(diagPlusSymmMatrix);
+            
+            Assert.AreEqual(symmetricMatrix.Sum(diagonalMatrix), resultMatrix);
         }
     }
 }
