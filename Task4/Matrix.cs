@@ -7,78 +7,55 @@ using System.Threading.Tasks;
 
 namespace Task4
 {    
-    public class MatrixEventArgs<T> where T : struct
+    public class MatrixEventArgs<T> : EventArgs where T : struct
     {
         public readonly T previousValue;
         public readonly T newValue;
+        public readonly int row;
+        public readonly int column;
 
-        public MatrixEventArgs(T previousValue, T newValue)
+        public MatrixEventArgs(T previousValue, T newValue, int row, int column)
         {
             this.previousValue = previousValue;
             this.newValue = newValue;
+            this.row = row;
+            this.column = column;
         }
     }
 
-    public abstract class Matrix<T> : IEnumerable<T>, IEquatable<Matrix<T>> where T : struct
+    public abstract class Matrix<T> : IEnumerable<T> where T : struct
     {
-        protected T[,] innerArray;
         protected virtual void OnElementChanged(MatrixEventArgs<T> e)
             => ElementChanged(this, e);
 
         public int Size { get; protected set; }
         public event EventHandler<MatrixEventArgs<T>> ElementChanged = delegate { };
-
-
-        public abstract T this[int i, int j] { get; set; }
-        public abstract void Accept(IMatrixVisitor<T> visitor);
-
-        public bool Equals(Matrix<T> other)
+                
+        public T this[int i, int j]
         {
-            if (ReferenceEquals(this, other))
-                return true;
-
-            if (ReferenceEquals(null, other))
-                return false;
-
-            for (int i = 0; i < Size; i++)
-                for (int j = 0; i < Size; j++)
-                    if (other[i, j].Equals(innerArray[i, j]))
-                        return false;
-
-            return true;
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(this, obj))
-                return true;
-
-            if (ReferenceEquals(null, obj))
-                return false;
-
-            if (GetType() != obj.GetType())
-                return false;
-
-            return Equals((Matrix<T>)obj);
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
+            get
             {
-                int hash = 17;
-                foreach (var element in innerArray)
-                    hash = hash * 23 + element.GetHashCode();
-                return hash;
+                if (i < 0 || i >= Size || j < 0 || j >= Size)
+                    throw new ArgumentOutOfRangeException();
+
+                return GetValue(i, j);
+            }
+
+            set
+            {
+                if (i < 0 || i >= Size || j < 0 || j >= Size)
+                    throw new ArgumentOutOfRangeException();
+                
+                OnElementChanged(new MatrixEventArgs<T>(GetValue(i, j), value, i, j));
+                SetValue(i, j, value);
             }
         }
+                
+        public abstract void Accept(IMatrixVisitor<T> visitor);        
+        public abstract IEnumerator<T> GetEnumerator();
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            for (int i = 0; i < Size; i++)
-                for (int j = 0; i < Size; j++)
-                    yield return innerArray[i, j];
-        }
+        protected abstract T GetValue(int i, int j);
+        protected abstract void SetValue(int i, int j, T value);
 
         IEnumerator IEnumerable.GetEnumerator()
         {

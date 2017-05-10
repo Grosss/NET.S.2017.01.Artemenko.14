@@ -8,6 +8,8 @@ namespace Task4
 {
     public class SquareMatrix<T> : Matrix<T> where T : struct
     {
+        private T[,] innerArray;
+
         public SquareMatrix() : this(4)
         { }
 
@@ -20,27 +22,36 @@ namespace Task4
             innerArray = new T[size, size];
         }
 
-        public override T this[int i, int j]
+        public SquareMatrix(T[,] array)
         {
-            get
-            {
-                if (i < 0 || i >= Size || j < 0 || j >= Size)
-                    throw new ArgumentOutOfRangeException();
+            if (ReferenceEquals(array, null))
+                throw new ArgumentNullException();
 
-                return innerArray[i, j];
-            }
+            if (array.GetLength(0) != array.GetLength(1))
+                throw new ArgumentException();
 
-            set
-            {
-                if (i < 0 || i >= Size || j < 0 || j >= Size)
-                    throw new ArgumentOutOfRangeException();
+            Size = array.GetLength(0);
+            innerArray = new T[Size, Size];
 
-                OnElementChanged(new MatrixEventArgs<T>(innerArray[i, j], value));
-                innerArray[i, j] = value;
-            }
+            for (int i = 0; i < Size; i++)
+                for (int j = 0; j < Size; j++)
+                    innerArray[i, j] = array[i, j];
         }
-        
+                
         public override void Accept(IMatrixVisitor<T> visitor)
             => visitor.Visit(this);
+
+        public override IEnumerator<T> GetEnumerator()
+        {
+            for (int i = 0; i < Size; i++)
+                for (int j = 0; j < Size; j++)
+                    yield return innerArray[i, j];
+        }
+
+        protected override T GetValue(int i, int j)
+            => innerArray[i, j];
+
+        protected override void SetValue(int i, int j, T value)
+            => innerArray[i, j] = value;    
     }
 }
